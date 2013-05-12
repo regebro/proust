@@ -32,19 +32,23 @@ def main():
         raise ValueError('%s is not a benchmark or suite.' % (args.benchmark))
     
     results = benchmark.run()
-    import pdb;pdb.set_trace()
+    if not isinstance(results, list):
+        # This is from a benchmark. We just wrap it in a list, so we can
+        # treat it the same as if it was from a suite.
+        results = [results]
     
-    # The results are printed out as CVS, but the CVS module is not used, because it's a lot of
-    # work to get working on both Python 2 and Python 3, and we don't really need it as the
-    # format is simple and predictable.
+    # The results are printed out as CVS, but the CVS module is not used,
+    # because it's a lot of work to get working on both Python 2 and Python
+    # 3, and we don't really need it as the format is simple and predictable.
     if args.output is None:
         output = sys.stdout
     else:
         output = open(args.output, 'wt')
         
     try:
-        output.write(results.csv_header() + '\n')
-        output.write(results.csv_data() + '\n')
+        output.write(results[0].csv_header() + '\n')
+        for r in results:
+            output.write(r.csv_data() + '\n')
     except Exception:
         if args.output:
             output.close()

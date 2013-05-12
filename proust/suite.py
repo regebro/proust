@@ -7,5 +7,5 @@ class Suite(object):
         self.benchmarks = benchmarks
     
     def run(self, **kw):
-        self.results = [bench.run(**kw) for bench in self.benchmarks]
+        return [bench.run(**kw) for bench in self.benchmarks]
 
