@@ -42,6 +42,10 @@ class BenchmarkTest(unittest.TestCase):
         # Benchmark doesn't fail if the test takes longer than the duration.
         runs = [0]
         def blah():
+            # We make a loop here, or this test is so fast under Jython that 
+            # Jython claims it takes zero time.
+            for loop in range(10000):
+                a = 1
             runs[0] += 1
             
         bench1 = Benchmark(blah, iterations=1, duration=0, bestof=5)
@@ -52,10 +56,10 @@ class BenchmarkTest(unittest.TestCase):
     def test_csv(self):
         bench1 = Benchmark('10*10', iterations=10000)
         results = bench1.run(foo=1, bar='A')
-        self.assertEqual(results.csv_header(), 'Description,Count,Fastest,Total time,Iterations,foo,bar')
+        self.assertEqual(results.csv_header(), 'Description,Count,Fastest,Total time,Iterations,bar,foo')
         csv = results.csv_data()
         self.assertTrue(csv.startswith('"10*10"'))
-        self.assertTrue(csv.endswith(',10000,1,A'))
+        self.assertTrue(csv.endswith(',10000,A,1'))
         self.assertEqual(len(csv.split(',')), 7)
     
 

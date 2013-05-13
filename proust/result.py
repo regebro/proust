@@ -10,14 +10,14 @@ class Result(object):
     def csv_data(self):
         description = self.description.replace('"', '\"')
         res = '"%s",%s,%s,%s,%s' % (description, self.count, self.fastest, self.cumul_time, self.iterations)
-        keywords = ','.join([str(x) for x in self.keywords.values()])
+        keywords = ','.join([str(self.keywords[x]) for x in sorted(self.keywords)])
         if keywords:
             res += ',' + keywords
         return res
     
     def csv_header(self):
         res = 'Description,Count,Fastest,Total time,Iterations'
-        keywords = ','.join([str(x) for x in self.keywords])
+        keywords = ','.join([str(x) for x in sorted(self.keywords)])
         if keywords:
             res += ',' + keywords
         return res
