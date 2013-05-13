@@ -4,8 +4,16 @@ from types import FunctionType, MethodType
 
 from proust.result import Result
 
-if 'xrange' not in dir(__builtins__):
+try:
+    xrange = xrange
+except NameError:
     xrange = range
+
+try:
+    callable = callable
+except NameError:
+    def callable(obj):
+        return any("__call__" in klass.__dict__ for klass in type(obj).__mro__)
 
 class Benchmark(object):
      

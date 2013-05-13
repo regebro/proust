@@ -1,7 +1,13 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.0'
+vinfo = sys.version_info[:2]
+if vinfo == (2, 7) or vinfo >= (3,3):
+    requires = []
+else:
+    requires = ['argparse']
+    
+version = '0.1'
 
 setup(name='proust',
       version=version,
@@ -17,9 +23,7 @@ setup(name='proust',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
-      install_requires=[
-          # -*- Extra requirements: -*-
-      ],
+      install_requires=requires,
       entry_points={
                'console_scripts': [
                    'proust = proust:main',
