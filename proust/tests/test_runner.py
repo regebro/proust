@@ -1,5 +1,4 @@
 import unittest
-import subprocess
 
 class RunnerTest(unittest.TestCase):
         

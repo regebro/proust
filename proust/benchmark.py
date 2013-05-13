@@ -1,8 +1,11 @@
 import gc
-from timeit import timeit, default_timer as timer
+from timeit import Timer, default_timer as timer
 from types import FunctionType, MethodType
 
 from proust.result import Result
+
+if 'xrange' not in dir(__builtins__):
+    xrange = range
 
 class Benchmark(object):
      
@@ -33,7 +36,7 @@ class Benchmark(object):
         while True:
             # Benchmark
             if self.statement:
-                time = timeit(self.benchmark, number=self.iterations)
+                time = Timer(self.benchmark).timeit(self.iterations)
             else:
                 start = timer()
                 for x in xrange(self.iterations):

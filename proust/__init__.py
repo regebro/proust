@@ -12,7 +12,7 @@ def main():
     except AttributeError:
         implementation = sys.subversion[0]
         
-    platform = '%s %s' % (implementation, '.'.join(str(x) for x in sys.version_info[:3]))
+    platform = '%s %s' % (implementation, '.'.join([str(x) for x in sys.version_info[:3]]))
     
     parser = argparse.ArgumentParser(description="A benchmark runner")
     
