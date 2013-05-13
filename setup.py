@@ -25,4 +25,5 @@ setup(name='proust',
                    'proust = proust:main',
                ],
       },
+      test_suite='proust.tests.get_suite'
       )
