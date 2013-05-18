@@ -13,16 +13,17 @@ try:
     callable = callable
 except NameError:
     def callable(obj):
-        return any("__call__" in klass.__dict__ for klass in type(obj).__mro__)
+        return any(["__call__" in klass.__dict__ for klass in type(obj).__mro__])
 
 class Benchmark(object):
      
-    def __init__(self, benchmark, description='', duration=0.1, iterations=1, bestof=3, gc=True):
+    def __init__(self, benchmark, description='', duration=1, iterations=1, bestof=5, gc=True):
         self.benchmark = benchmark
         self.duration = duration
         self.iterations = iterations
         self.bestof = bestof
         self.gc = True
+        self.description = description
 
         if callable(benchmark):
             self.statement = False

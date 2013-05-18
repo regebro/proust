@@ -10,7 +10,15 @@ def main():
     try:
         implementation = sys.implementation.name
     except AttributeError:
-        implementation = sys.subversion[0]
+        try:
+            implementation = sys.subversion[0]
+        except AttributeError:
+            import os
+            import string
+            implementation = sys.executable.split(os.path.sep)[-1]
+            implementation = ''.join([x for x in implementation if x not in string.digits])
+            if implementation == 'python':
+                implementation = 'CPython'
         
     platform = '%s %s' % (implementation, '.'.join([str(x) for x in sys.version_info[:3]]))
     
